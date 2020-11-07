@@ -16,14 +16,19 @@ db.once("open",()=>{
     console.log("Database connected");
 })
 
+const sample= arr => { 
+    let randomNo=Math.floor(Math.random()*arr.length)
+    return arr[randomNo];   
+}
+
 const addCamp=async ()=>{
     await Campground.deleteMany({});
     for(let i=1;i<50;i++)
     {
-        const randomNo=Math.floor(Math.random()*1000);
+        let randomNo=Math.floor(Math.random()*1000);
         const camp=new Campground({
             location:`${cities[randomNo].city}, ${cities[randomNo].state}`,
-            title:`${places[randomNo]}, ${descriptors[randomNo]}`,
+            title:`${sample(descriptors)} ${sample(places)}`,
         })
         await camp.save();
     }
