@@ -3,9 +3,25 @@
     <div>
         <a href="/campgrounds/new">New Campground</a>
     </div>
-    <ul>
         <% for(let camp of camps){ %>
-            <li><a href="/campgrounds/<%= camp._id %>"><%= camp.title %></a></li>
-    
+            <div class="card mb-3">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <img class="img-fluid" src="<%= camp.image %>" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= camp.title %></h5>
+                            <p class="card-text"><%= camp.description %></p>
+                            <p class="card-text">
+                                <small class="text-muted"><%= camp.location %></small>
+                            </p>
+                             
+                            <a href="/campgrounds/<%= camp._id %>" class="btn btn-success">View <%= camp.title %></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         <% } %> 
-    </ul>
+ 
