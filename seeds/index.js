@@ -26,9 +26,13 @@ const addCamp=async ()=>{
     for(let i=1;i<50;i++)
     {
         let randomNo=Math.floor(Math.random()*1000);
+        let randomPrice=Math.floor(Math.random()*300)+30;
         const camp=new Campground({
             location:`${cities[randomNo].city}, ${cities[randomNo].state}`,
             title:`${sample(descriptors)} ${sample(places)}`,
+            image:'https://source.unsplash.com/collection/483251',
+            description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            price:randomPrice,
         })
         await camp.save();
     }
