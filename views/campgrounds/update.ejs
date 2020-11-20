@@ -3,34 +3,39 @@
     <div class="row">
         <h1 class="text-center">Update Campground</h1>
         <div class="container col-6 offset-3">
-            <form action="/campgrounds/<%=camp._id%>?_method=PUT" method="POST">
+            <form action="/campgrounds/<%=camp._id%>?_method=PUT" method="POST" novalidate class="needs-validation">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" name="campground[title]" id="title" value="<%=camp.title%>">
+                    <input class="form-control" type="text" name="campground[title]" id="title" value="<%=camp.title%>" required>
+                    <div class="valid-feedback">Fine!!</div>
                 </div>
                 
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
-                    <input class="form-control" type="text" name="campground[location]" id="location" value="<%=camp.location%>">   
+                    <input class="form-control" type="text" name="campground[location]" id="location" value="<%=camp.location%>" required>   
+                    <div class="valid-feedback">Fine!!</div>
                 </div>
     
                 <div class="mb-3">
                     <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" name="campground[image]" id="image" value="<%=camp.image%>">   
+                    <input class="form-control" type="text" name="campground[image]" id="image" value="<%=camp.image%>" required>  
+                    <div class="valid-feedback">Fine!!</div> 
                 </div>
     
                 <div class="mb-3">
                     <label class="form-label" for="price">Price</label>
                     <div class="input-group">
                         <span class="input-group-text" id="price-label">$</span>      
-                        <input type="number" class="form-control"  aria-label="price" aria-describedby="price-label" id="price" name="campground[price]" value="<%=camp.price%>">
+                        <input type="number" class="form-control"  aria-label="price" aria-describedby="price-label" id="price" name="campground[price]" value="<%=camp.price%>" required>
                     </div>
+                    <div class="valid-feedback">Fine!!</div>
                 </div>
                 
     
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" name="campground[description]" id="description"><%= camp.description %></textarea>  
+                    <textarea class="form-control" type="text" name="campground[description]" id="description" required><%= camp.description %></textarea>  
+                    <div class="valid-feedback">Fine!!</div>
                 </div>
 
                 <div class="mb-3">
@@ -44,3 +49,24 @@
         
     </div>
     <a class="btn btn-success" href="/campgrounds/<%=camp._id%>">Back to Campground</a>
+    <script>
+        (function () {
+      'use strict'
+    
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+    
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+            //   event.stopPropagation()
+            }
+    
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+    </script>
