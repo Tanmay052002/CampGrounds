@@ -7,6 +7,7 @@ const Campground=require('./models/campground');
 const methodOverride=require('method-override');
 const wrapasync=require('./utilities/wrapasync');
 const AppError = require('./utilities/AppError');
+const {campSchema}=require('./schema')
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp",{
     useNewUrlParser:true,
@@ -32,6 +33,17 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 
+const validateCamp=(req,res,next)=>{
+    const {error}=campSchema.validate(req.body);
+    if(error)
+    {
+        throw new AppError(400,error.details.map(el=>el.message).join(','))
+    }
+    else{
+        next();
+    }
+}
+
 app.get('/',(req,res)=>{
     res.render('home');
 })
@@ -44,21 +56,8 @@ app.get('/campgrounds',async (req,res)=>{
 app.get('/campgrounds/new',(req,res)=>{
     res.render('campgrounds/new.ejs');
 })
-app.post('/campgrounds',wrapasync(async (req,res,next)=>{
-    const campSchema=joi.object({
-        campground:joi.object({
-            title:joi.string().required(),
-            price:joi.number().required().min(0),
-            image:joi.string().required(),
-            location:joi.string().required(),
-            description:joi.string().required()
-        }).required()
-    })
-    const {error}=campSchema.validate(req.body);
-    if(error)
-    {
-        throw new AppError(400,error.details.map(el=>el.message).join(','))
-    }
+app.post('/campgrounds',validateCamp,wrapasync(async (req,res,next)=>{
+    
     const camp=new Campground(req.body.campground);
     await camp.save();
     res.redirect(`/campgrounds/${camp._id}`);
@@ -74,7 +73,7 @@ app.get('/campgrounds/:id/edit',wrapasync(async (req,res)=>{
     const camp=await Campground.findById(id);
     res.render('campgrounds/update',{camp});
 }))
-app.put('/campgrounds/:id',wrapasync(async (req,res)=>{
+app.put('/campgrounds/:id',validateCamp,wrapasync(async (req,res)=>{
     const {id}=req.params;
     const camp=await Campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campgrounds/${id}`)
@@ -87,7 +86,7 @@ app.delete('/campgrounds/:id',wrapasync(async (req,res)=>{
 }))
 
 app.all('*',(req,res,next)=>{
-    next(new AppError(404,"Page Not Found"));
+    next(new AppError(404));
 })
 
 app.use((err,req,res,next)=>{
