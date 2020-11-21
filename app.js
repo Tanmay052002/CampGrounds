@@ -2,6 +2,7 @@ const express=require('express');
 const mongoose=require('mongoose');
 const path=require('path');
 const ejsMate=require('ejs-mate');
+const joi=require('joi');
 const Campground=require('./models/campground');
 const methodOverride=require('method-override');
 const wrapasync=require('./utilities/wrapasync');
@@ -44,9 +45,19 @@ app.get('/campgrounds/new',(req,res)=>{
     res.render('campgrounds/new.ejs');
 })
 app.post('/campgrounds',wrapasync(async (req,res,next)=>{
-    if(!req.body.campground)
+    const campSchema=joi.object({
+        campground:joi.object({
+            title:joi.string().required(),
+            price:joi.number().required().min(0),
+            image:joi.string().required(),
+            location:joi.string().required(),
+            description:joi.string().required()
+        }).required()
+    })
+    const {error}=campSchema.validate(req.body);
+    if(error)
     {
-        throw new AppError(500,"Body empty")
+        throw new AppError(400,error.details.map(el=>el.message).join(','))
     }
     const camp=new Campground(req.body.campground);
     await camp.save();
@@ -87,8 +98,6 @@ app.use((err,req,res,next)=>{
     }
     res.status(status).render('error',{err});
 })
-
-
 
 app.listen(3000,()=>{
     console.log("Port 3000");
