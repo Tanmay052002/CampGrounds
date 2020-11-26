@@ -1,12 +1,18 @@
 const mongoose=require('mongoose');
-const schema=mongoose.Schema;
+const Schema=mongoose.Schema;
 
-const CampgroundSchema=new schema({
+const CampgroundSchema=new Schema({
     title:String,
     price:Number,
     description:String,
     location:String,
-    image:String
+    image:String,
+    reviews:[
+        {
+            type:Schema.Types.ObjectID,
+            ref:'Review'
+        }
+    ]
 })
 
 module.exports=mongoose.model('Campground',CampgroundSchema);

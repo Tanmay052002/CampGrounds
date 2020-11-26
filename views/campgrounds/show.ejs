@@ -21,8 +21,21 @@
             <div class="card-footer">
                 
                 <a class="card-link btn btn-info" href="/campgrounds">All Campgrounds</a>
-              </div>
-          </div>
+            </div>
+         </div>
+         <h2>Leave a Review</h2>
+         <form action="/campgrounds/<%= camp._id %>/reviews" class="mb-3" method="POST">
+           <div class="mb-3">
+              <label class="form-label" for="rating">Rating</label>
+              <input type="range" class="form-range" name="review[rating]" id="rating" min=1 max=5>
+           </div>
+           <div class="mb-3">
+              <label class="form-label" for="body">Review</label>
+              <textarea name="review[body]" id="body" class="form-control" cols="30" rows="5"></textarea>
+           </div>
+           
+           <button class="btn btn-danger">Submit</button>
+         </form>
     </div>
 </div>
 
