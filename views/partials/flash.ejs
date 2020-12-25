@@ -1,0 +1,13 @@
+<% if(sucMsg.length){ %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= sucMsg %>
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if(errMsg.length){ %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= errMsg %>
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>

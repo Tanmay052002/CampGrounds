@@ -7,25 +7,21 @@ const AppError = require('./utilities/AppError');
 const campgroundRoutes=require('./routes/campground');
 const reviewRoutes=require('./routes/review');
 const session = require('express-session');
+const flash=require('connect-flash');
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp",{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
 }); 
-
 mongoose.set('useFindAndModify', false);
-
 const db=mongoose.connection;
 db.on("error",console.error.bind(console,"connection error:"));
 db.once("open",()=>{
     console.log("Database connected");
 })
 
-
 const app=express();
-
-
 
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
@@ -46,6 +42,12 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig));
+app.use(flash());
+app.use((req,res,next) => {
+    res.locals.sucMsg = req.flash('success');
+    res.locals.errMsg = req.flash('error');
+    next();
+})
 
 app.use('/campgrounds',campgroundRoutes);
 app.use('/campgrounds/:id/reviews',reviewRoutes);

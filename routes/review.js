@@ -5,6 +5,8 @@ const Campground=require('../models/campground');
 const wrapasync=require('../utilities/wrapasync');
 const AppError = require('../utilities/AppError');
 const {reviewSchema}=require('../schema');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const validateReview = (req,res,next)=>{
     const {error} = reviewSchema.validate(req.body);
@@ -27,6 +29,7 @@ router.post('/',validateReview,wrapasync(async (req,res)=>{
     await review.save();
     await camp.save();   
     // res.send("hello");
+    req.flash('success','Successfully added the review');
     res.redirect(`/campgrounds/${id}`);
 }))
 
@@ -38,6 +41,7 @@ router.delete('/:reviewId',wrapasync(async (req,res) => {
 
     // await review.save();
     // await camp.reviews.findById(reviewId);
+    req.flash('success','Successfully deleted the review');
     res.redirect(`/campgrounds/${id}`);
 }))
 
