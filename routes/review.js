@@ -7,24 +7,13 @@ const AppError = require('../utilities/AppError');
 const {reviewSchema}=require('../schema');
 const session = require('express-session');
 const flash = require('connect-flash');
+const {validateReview, isLoggedIn, isReviewAuthor } = require('../middleware');
 
-const validateReview = (req,res,next)=>{
-    const {error} = reviewSchema.validate(req.body);
-    // console.log(error);
-    if(error)
-    {
-        const msg=error.details.map(el=>el.message).join(',');
-        throw new AppError(400,msg);
-    }
-    else{
-        next();
-    }
-}
-
-router.post('/',validateReview,wrapasync(async (req,res)=>{
+router.post('/', isLoggedIn, validateReview,wrapasync(async (req,res)=>{
     const {id}=req.params;
     const camp=await Campground.findById(id);
     const review=new Review(req.body.review);
+    review.author = req.user._id;
     camp.reviews.push(review);
     await review.save();
     await camp.save();   
@@ -33,7 +22,7 @@ router.post('/',validateReview,wrapasync(async (req,res)=>{
     res.redirect(`/campgrounds/${id}`);
 }))
 
-router.delete('/:reviewId',wrapasync(async (req,res) => {
+router.delete('/:reviewId',isLoggedIn, isReviewAuthor, wrapasync(async (req,res) => {
     const {id,reviewId}=req.params;
     const review=await Review.findByIdAndDelete(reviewId);
     const camp=await Campground.findById(id);
