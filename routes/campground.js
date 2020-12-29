@@ -3,10 +3,14 @@ const router=express.Router();
 const wrapasync=require('../utilities/wrapasync');
 const {isLoggedIn,isAuthorize,validateCamp} = require('../middleware');
 const campgrounds = require('../controllers/campgrounds');
+const multer = require('multer');
+const { storage } = require('../cloudinary/index');
+const upload = multer({ storage });
 
 router.route('/')
     .get(campgrounds.homePage)
-    .post(isLoggedIn, validateCamp,wrapasync(campgrounds.makeNewCampground));
+    .post(isLoggedIn,upload.array('image'), validateCamp,wrapasync(campgrounds.makeNewCampground));
+    
 
 router.get('/new', isLoggedIn, campgrounds.renderNewCampgroundForm)
 

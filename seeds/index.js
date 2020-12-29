@@ -31,7 +31,16 @@ const addCamp=async ()=>{
             author: "5fe739a2ad49226a1c5c5d0f",
             location:`${cities[randomNo].city}, ${cities[randomNo].state}`,
             title:`${sample(descriptors)} ${sample(places)}`,
-            image:'https://source.unsplash.com/collection/483251',
+                image:[
+                    {
+                      url: 'https://res.cloudinary.com/dbd2wzwbs/image/upload/v1609214458/YelpCamp/jcjbobjtcbvpo1oc6kab.jpg',
+                      filename: 'YelpCamp/jcjbobjtcbvpo1oc6kab'
+                    },
+                    { 
+                      url: 'https://res.cloudinary.com/dbd2wzwbs/image/upload/v1609214458/YelpCamp/dik38i2v5udmokufxooq.jpg',
+                      filename: 'YelpCamp/dik38i2v5udmokufxooq'
+                    }
+                  ],
             description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             price:randomPrice,
         })
