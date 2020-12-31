@@ -1,15 +1,29 @@
 <% layout('layouts/boilerplate.ejs') %>
-<h1>Login Page!!!!</h1>
-<form action="/login" method="POST" class="needs-validation" novalidate>
-    <div class="mb-3">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" name="username" id="username" required>
-        <div class="valid-feedback">Fine!!</div>
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="col-6 offset-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://st.depositphotos.com/1203257/1762/i/600/depositphotos_17623797-stock-photo-the-campground.jpg" alt="" class="card-img-top">   
+                <div class="card-body">
+                    <h5 class="card-title">Login:</h5>
+                    <form action="/login" method="POST" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" name="username" id="username" autofocus required>
+                        <div class="valid-feedback">Fine!!</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" name="password" id="password" required>
+                        <div class="valid-feedback">Fine!!</div>
+                    </div>
+                    <div class="d-grid">
+                        <button class = "btn btn-success">Login!!</button>
+                    </div>
+                </form>
+                </div>
+                
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" type="password" name="password" id="password" required>
-        <div class="valid-feedback">Fine!!</div>
-    </div>
-    <button class = "btn btn-success">Login!!</button>
-</form>
+</div>

@@ -2,7 +2,7 @@
 
     <div class="row">
         <h1 class="text-center">Update Campground</h1>
-        <div class="container col-6 offset-3">
+        <div class="container col-10 offset-1 col-md-6 offset-md-3">
             <form action="/campgrounds/<%=camp._id%>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
@@ -48,7 +48,7 @@
                         
                     <% }) %>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 d-grid">
                     <button class="btn btn-primary">Update Campground</button>
                 </div>
                 
