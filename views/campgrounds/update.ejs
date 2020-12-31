@@ -39,7 +39,7 @@
                 <div class="mb-3">
                     <% camp.image.forEach((img,i)=>{ %>
                         <br>  
-                        <img src="<%= img.url %>" class="img-thumbnail" alt="">
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
                         <br>
                         <div class="form-check-inline">
                             <input type="checkbox" id="Image No.-<%= i %>" name="deleteImages[]" value="<%= img.filename %>">    
