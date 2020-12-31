@@ -23,7 +23,7 @@ const sample= arr => {
 
 const addCamp=async ()=>{
     await Campground.deleteMany({});
-    for(let i=1;i<50;i++)
+    for(let i=1;i<200;i++)
     {
         let randomNo=Math.floor(Math.random()*1000);
         let randomPrice=Math.floor(Math.random()*300)+30;
@@ -33,7 +33,7 @@ const addCamp=async ()=>{
             title:`${sample(descriptors)} ${sample(places)}`,
             geometry:{
                 type:"Point",
-                coordinates:[77.1025, 28.7041]
+                coordinates:[cities[randomNo].longitude,cities[randomNo].latitude]
             },
             image:[
                 {
