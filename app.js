@@ -44,6 +44,7 @@ app.use(mongoSanitize({
 }))
 
 const sessionConfig = {
+    name: 'qwerty',
     secret: 'why would i tell you',
     resave: false,
     saveUninitialized: true,
@@ -64,7 +65,6 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next) => {
-    console.log(req.query);
     res.locals.signedUser = req.user;
     res.locals.sucMsg = req.flash('success');
     res.locals.errMsg = req.flash('error');
@@ -74,14 +74,6 @@ app.use((req,res,next) => {
 app.use('/',userRoutes);
 app.use('/campgrounds',campgroundRoutes);
 app.use('/campgrounds/:id/reviews',reviewRoutes);
-
-app.get('/fake',async (req,res)=>{
-    const user = new User({ email:"asd@gmail.com" , username:"asd45" });
-    const u = await User.register(user,'pass');
-    res.send(u);
-})
-
-
 
 
 app.get('/',(req,res)=>{
