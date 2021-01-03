@@ -28,7 +28,7 @@ const addCamp=async ()=>{
         let randomNo=Math.floor(Math.random()*1000);
         let randomPrice=Math.floor(Math.random()*300)+30;
         const camp=new Campground({
-            author: "5fe739a2ad49226a1c5c5d0f",
+            author: "5ff1814cddc8003a9c113062",
             location:`${cities[randomNo].city}, ${cities[randomNo].state}`,
             title:`${sample(descriptors)} ${sample(places)}`,
             geometry:{
