@@ -19,8 +19,9 @@ const options = require('./csp');
 const userRoutes=require('./routes/users');
 const campgroundRoutes=require('./routes/campground');
 const reviewRoutes=require('./routes/review');
-
-mongoose.connect("mongodb://localhost:27017/yelp-camp",{
+const mongoDBStore = require('connect-mongo')(session);
+const dburl = process.env.DB_URL||'mongodb://localhost:27017/yelp-camp';
+mongoose.connect(dburl,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -44,10 +45,19 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(mongoSanitize({
     replaceWith:'_'
 }))
-
+const secret = process.env.SECRET || 'why would i tell you';
+const store = new mongoDBStore({
+    url: dburl,
+    secret,
+    touchAfter: 24*3600
+})
+store.on("error",function(e){
+    console.log("Session Store Error",e);
+})
 const sessionConfig = {
+    // store,
     name: 'qwerty',
-    secret: 'why would i tell you',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -99,7 +109,7 @@ app.use((err,req,res,next)=>{
     }
     res.status(status).render('error',{err});
 })
-
-app.listen(3000,()=>{
-    console.log("Port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port,()=>{
+    console.log(`Port ${port}`);
 })
