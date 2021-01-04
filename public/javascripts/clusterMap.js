@@ -1,5 +1,4 @@
-console.log(camps);
-mapboxgl.accessToken = 'pk.eyJ1IjoiYmFuc2FsZGhydXY0OSIsImEiOiJja2pjYnhkdmQwc3o2MnZxcTcxaTdkdWYxIn0.GbbH95zoSUthqfcr-dDn9g';
+mapboxgl.accessToken = mapBoxtkn;
 const map = new mapboxgl.Map({
     container: 'cluster-map',
     style: 'mapbox://styles/mapbox/dark-v10',
