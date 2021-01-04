@@ -105,13 +105,6 @@ map.on('load', function () {
         const {popUp} = e.features[0].properties;
         const coordinates = e.features[0].geometry.coordinates.slice();
         const mag = e.features[0].properties.mag;
-        var tsunami;
-
-        if (e.features[0].properties.tsunami === 1) {
-            tsunami = 'yes';
-        } else {
-            tsunami = 'no';
-        }
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
