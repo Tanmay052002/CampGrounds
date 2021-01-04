@@ -55,7 +55,7 @@ store.on("error",function(e){
     console.log("Session Store Error",e);
 })
 const sessionConfig = {
-    // store,
+    store,
     name: 'qwerty',
     secret,
     resave: false,
